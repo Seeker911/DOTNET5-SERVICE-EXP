@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace DOTNET5_SERVICE_EXP
+namespace DotNet5.Service.Exp
 {
     public class Worker : BackgroundService
     {
@@ -22,7 +22,7 @@ namespace DOTNET5_SERVICE_EXP
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                await Task.Delay(1000, stoppingToken);
+                await Task.Delay(15000, stoppingToken);
             }
         }
     }
