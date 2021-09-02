@@ -28,6 +28,7 @@ namespace DotNet5.Service.Exp
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseSystemd()
                 .ConfigureHostConfiguration(config =>
                 {
                     config.AddCommandLine(args);
