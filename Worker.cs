@@ -25,5 +25,19 @@ namespace DotNet5.Service.Exp
                 await Task.Delay(15000, stoppingToken);
             }
         }
+
+        public override Task StopAsync(System.Threading.CancellationToken stoppingToken)
+        {
+            _logger.LogInformation($"Worker - StopAsync received");
+
+            return base.StopAsync(stoppingToken);
+        }
+
+        public override Task StartAsync(System.Threading.CancellationToken stoppingToken)
+        {
+            _logger.LogInformation($"Worker - StartAsync received");
+
+            return base.StartAsync(stoppingToken);
+        }
     }
 }

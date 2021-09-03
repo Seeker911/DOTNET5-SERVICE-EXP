@@ -13,7 +13,9 @@ namespace DotNet5.Service.Exp
 {
     public class Program
     {
-        public static void Main(string[] args)
+        private static IHost _Host;
+
+        public static async Task Main(string[] args)
         {
             using var processModule = Process.GetCurrentProcess().MainModule;
             if (processModule != null)
@@ -23,10 +25,28 @@ namespace DotNet5.Service.Exp
                 Directory.SetCurrentDirectory(pathToContentRoot);
             }
 
-            CreateHostBuilder(args).Build().Run();
+            _Host = CreateHostBuilder(args).Build();
+            await _Host.RunAsync();
+        }
+
+        /// <summary>
+        /// Not sure how this would ever get called ?
+        /// </summary>
+        /// <returns></returns>
+        public async Task StopAsync()
+        {
+            var logger = _Host.Services.GetService<ILogger>();
+
+            logger.Information($"Worker - Stop signaled inside Program.cs");
+
+            using (_Host)
+            {
+                await _Host.StopAsync();
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
+
             Host.CreateDefaultBuilder(args)
                 .UseSystemd()
                 .ConfigureHostConfiguration(config =>
